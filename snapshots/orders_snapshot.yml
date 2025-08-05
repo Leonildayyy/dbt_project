@@ -1,0 +1,9 @@
+snapshots:
+  - name: orders_snapshot_check
+    relation: source('jaffle_shop', 'orders')
+    config:
+      schema: snapshots
+      unique_key: id
+      strategy: check
+      check_cols:
+        - status
