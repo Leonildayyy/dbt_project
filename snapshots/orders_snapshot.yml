@@ -3,7 +3,6 @@ snapshots:
     relation: source('jaffle_shop', 'orders')
     config:
       database: analytics   # 明确指定 database
-      schema: snapshots
       unique_key: id
       strategy: check
       check_cols:
