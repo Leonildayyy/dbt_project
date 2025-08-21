@@ -39,3 +39,7 @@ models:
   jaffle_shop:
     # Applies to all files under models/example/
     +materialized: table
+
+seeds:
+  jaffle_shop:     
+    +quote_columns: true
