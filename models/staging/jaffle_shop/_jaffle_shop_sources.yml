@@ -26,3 +26,11 @@ sources:
           freshness:
             warn_after: {count: 12, period: hour}
             error_after: {count: 24, period: hour}
+      
+        - name: products
+          description: product description
+          columns:
+          - name: SKU
+            tests:
+              - unique              
+              - not_null
