@@ -1,11 +1,11 @@
 models:
-  - name: dim_product
+  - name: dim_products
     config:
       contract:
         enforced: true
     columns:
       - name: product_id 
-        data_type: int
+        data_type: varchar
         constraints:
           - type: not_null
       - name: product_name 
