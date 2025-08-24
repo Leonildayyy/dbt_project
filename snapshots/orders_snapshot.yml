@@ -6,6 +6,6 @@ snapshots:
       database: analytics   # 明确指定 database
       unique_key: id
       strategy: check
-      check_cols: ['id', 'user_id', 'order_date', 'status']
+      check_cols: ['id', 'customer', 'order_at']
       hard_deletes: ignore
       dbt_valid_to_current: "to_date('9999-12-31')"
