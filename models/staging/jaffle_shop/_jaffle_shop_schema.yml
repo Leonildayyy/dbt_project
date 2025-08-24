@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: stg_jaffle_shop__customers
+  - name: stg_customers
     description: one unique customer per row
     columns:
       - name: customer_id
@@ -10,7 +10,7 @@ models:
           - unique
           - not_null
 
-  - name: stg_jaffle_shop__orders
+  - name: stg_orders
     description: one order per row
     columns:
       - name: order_id
@@ -28,5 +28,5 @@ models:
       - name: customer_id
         tests:
           - relationships:
-              to: ref('stg_jaffle_shop__customers')
+              to: ref('stg_customers')
               field: customer_id
