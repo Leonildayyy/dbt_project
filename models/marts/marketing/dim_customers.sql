@@ -1,40 +1,29 @@
-{{
-  config(
-    materialized='view'
-  )
-}}
+with
 
+customers as (
 
-with customers as (
-
-    select
-    *
-    from {{ ref('stg_jaffle_shop__customers') }}
+    select * from {{ ref('stg_customers') }}
 
 ),
 
 orders as (
 
-    select
-    *
-    from {{ ref('stg_jaffle_shop__orders') }}
+    select * from {{ ref('stg_orders') }}
 
 ),
 
-employees as (
+customer_orders_summary as (
 
     select
-    *
-    from {{ ref('employees') }}
+        orders.customer_id,
 
-),
-customer_orders as (
-
-    select
-        customer_id,
-        min(order_date) as first_order_date,
-        max(order_date) as most_recent_order_date,
-        count(order_id) as number_of_orders
+        count(distinct orders.order_id) as count_lifetime_orders,
+        count(distinct orders.order_id) > 1 as is_repeat_buyer,
+        min(orders.ordered_at) as first_ordered_at,
+        max(orders.ordered_at) as last_ordered_at,
+        sum(orders.subtotal) as lifetime_spend_pretax,
+        sum(orders.tax_paid) as lifetime_tax_paid,
+        sum(orders.order_total) as lifetime_spend
 
     from orders
 
@@ -42,22 +31,27 @@ customer_orders as (
 
 ),
 
-final as (
+joined as (
 
     select
-        customers.customer_id,
-        customers.first_name,
-        customers.last_name,
-        employees.employee_id is not null as is_employee,
-        customer_orders.first_order_date,
-        customer_orders.most_recent_order_date,
-        coalesce(customer_orders.number_of_orders, 0) as number_of_orders
+        customers.*,
+        customer_orders_summary.count_lifetime_orders,
+        customer_orders_summary.first_ordered_at,
+        customer_orders_summary.last_ordered_at,
+        customer_orders_summary.lifetime_spend_pretax,
+        customer_orders_summary.lifetime_tax_paid,
+        customer_orders_summary.lifetime_spend,
+
+        case
+            when customer_orders_summary.is_repeat_buyer then 'returning'
+            else 'new'
+        end as customer_type
 
     from customers
-    left join customer_orders on customers.customer_id = customer_orders.customer_id
-    left join employees  on customers.customer_id = employees.customer_id
 
+    left join customer_orders_summary
+        on customers.customer_id = customer_orders_summary.customer_id
 
 )
 
-select * from final
+select * from joined
