@@ -11,4 +11,4 @@ snapshots:
       hard_deletes: ignore
       # 如果源表里被物理删除 → snapshot 不动
       dbt_valid_to_current: "to_date('9999-12-31')"
-      #对于 当前还有效（还没过期）的记录，dbt_valid_to 列的值就写成 9999-12-31。
+      #还没失效的行用 9999-12-31 来表示。
