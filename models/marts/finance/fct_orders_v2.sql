@@ -20,7 +20,7 @@ order_payments as (
     select
         orders.order_id,
         orders.customer_id,
-        orders.order_date,
+        orders.order_date as date,
         coalesce (order_payments.amount, 0) as amount
 
     from orders

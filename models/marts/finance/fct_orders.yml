@@ -1,0 +1,29 @@
+models:
+  - name: fct_orders
+    group: finance
+    access: public
+    latest_version: 1
+    config:
+      contract:
+        enforced: true
+
+    # 顶层 = v1 的完整列（只写一次）
+    columns:
+      - name: order_id
+        data_type: number
+      - name: customer_id
+        data_type: number
+      - name: order_date
+        data_type: date
+      - name: amount
+        data_type: number
+
+    versions:
+      - v: 1       # 继承顶层全部列，无需再写 columns
+
+      - v: 2
+        columns:
+          - include: all
+            exclude: [order_date]   # 删掉旧列名
+          - name: date              # 增加新列名
+            data_type: date

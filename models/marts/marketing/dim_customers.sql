@@ -1,8 +1,8 @@
 with customers as (
-    select * from {{ ref ('stg_customers')}}
+    select * from {{ ref ('stg_customers') }}
 ),
 orders as (
-    select * from {{ ref ('fct_orders')}}
+    select * from {{ ref ('fct_orders',version = '1') }}
 ),
 customer_orders as (
     select
