@@ -1,13 +1,13 @@
 models:
   - name: fct_orders
-    group: finance
-    access: public
     latest_version: 1
     config:
       contract:
         enforced: true
 
     # 顶层 = v1 的完整列（只写一次）
+      group: finance
+      access: public
     columns:
       - name: order_id
         data_type: number

@@ -18,14 +18,16 @@ models:
         tests:
           - unique
           - not_null
-        
+
       - name: status
         tests:
           - accepted_values:
-              values: ['shipped', 'completed', 'return_pending', 'returned', 'placed']
+              arguments:
+                values: ['shipped', 'completed', 'return_pending', 'returned', 'placed']
 
       - name: customer_id
         tests:
           - relationships:
-              to: ref('stg_customers')
-              field: customer_id
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
