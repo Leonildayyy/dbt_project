@@ -7,11 +7,8 @@ with orders as (
 customers as (
 
     select 
-        customer_id,
-        first_name as givenname,
-        last_name as surname,
-        first_name || ' ' || last_name as full_name
-    from {{ ref('stg_customers') }}
+    *
+    from {{ ref('stg_jaffle_shop__customers') }}
 ),
 customer_orders as (
 
